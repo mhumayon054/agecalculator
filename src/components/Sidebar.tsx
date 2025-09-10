@@ -32,6 +32,8 @@ type SidebarProps = {
   defaultOpenCategories?: string[]
   mobileTitle?: string
   showMobileToggle?: boolean
+  open?: boolean // New prop to control open state
+  onOpenChange?: (open: boolean) => void // New prop to control open state
 }
 
 function classNames(...classes: Array<string | undefined | false | null>) {
@@ -141,68 +143,12 @@ export default function Sidebar({
   defaultOpenCategories,
   mobileTitle = "Browse calculators",
   showMobileToggle = true,
+  open, // New prop
+  onOpenChange, // New prop
 }: SidebarProps) {
-  const [open, setOpen] = React.useState(false)
-
   return (
     <div className={classNames("w-full max-w-full", className)} style={style}>
-      {/* Mobile trigger */}
-      {showMobileToggle && (
-        <div className="flex md:hidden">
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-              <Button
-                variant="outline"
-                className="gap-2 bg-[var(--card)] text-[var(--foreground)] border-[var(--border)] hover:bg-[var(--neutral-soft)]"
-                aria-label="Open sidebar"
-              >
-                <PanelLeftOpen className="h-4 w-4" aria-hidden="true" />
-                Menu
-              </Button>
-            </SheetTrigger>
-            <SheetContent
-              side="left"
-              className="w-[88vw] sm:w-96 p-0 bg-[var(--sidebar-background)] border-r border-[var(--sidebar-border)]"
-            >
-              <SheetHeader className="px-4 py-3 border-b border-[var(--sidebar-border)] bg-[var(--card)]">
-                <div className="flex items-center justify-between">
-                  <SheetTitle className="text-base font-semibold text-[var(--foreground)]">
-                    {mobileTitle}
-                  </SheetTitle>
-                  <SheetClose asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
-                      aria-label="Close sidebar"
-                    >
-                      <PanelLeftClose className="h-5 w-5" aria-hidden="true" />
-                    </Button>
-                  </SheetClose>
-                </div>
-              </SheetHeader>
-              <div className="h-full">
-                <ScrollArea className="h-full">
-                  <nav
-                    aria-label="Calculator categories"
-                    className="p-2 sm:p-3"
-                  >
-                    <CategoryList
-                      categories={categories}
-                      activeSlug={activeSlug}
-                      onSelect={(calc, cat) => {
-                        onSelect?.(calc, cat)
-                        setOpen(false)
-                      }}
-                      defaultOpenCategories={defaultOpenCategories}
-                    />
-                  </nav>
-                </ScrollArea>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
-      )}
+      {/* Mobile trigger - removed since we're controlling from header */}
 
       {/* Desktop sidebar */}
       <aside
@@ -228,6 +174,52 @@ export default function Sidebar({
           </ScrollArea>
         </div>
       </aside>
+
+      {/* Mobile sidebar */}
+      <div className="md:hidden">
+        <Sheet open={open} onOpenChange={onOpenChange}>
+          <SheetContent
+            side="left"
+            className="w-[88vw] sm:w-96 p-0 bg-[var(--sidebar-background)] border-r border-[var(--sidebar-border)]"
+          >
+            <SheetHeader className="px-4 py-3 border-b border-[var(--sidebar-border)] bg-[var(--card)]">
+              <div className="flex items-center justify-between">
+                <SheetTitle className="text-base font-semibold text-[var(--foreground)]">
+                  {mobileTitle}
+                </SheetTitle>
+                <SheetClose asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                    aria-label="Close sidebar"
+                  >
+                    <PanelLeftClose className="h-5 w-5" aria-hidden="true" />
+                  </Button>
+                </SheetClose>
+              </div>
+            </SheetHeader>
+            <div className="h-full">
+              <ScrollArea className="h-full">
+                <nav
+                  aria-label="Calculator categories"
+                  className="p-2 sm:p-3"
+                >
+                  <CategoryList
+                    categories={categories}
+                    activeSlug={activeSlug}
+                    onSelect={(calc, cat) => {
+                      onSelect?.(calc, cat)
+                      onOpenChange?.(false)
+                    }}
+                    defaultOpenCategories={defaultOpenCategories}
+                  />
+                </nav>
+              </ScrollArea>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
     </div>
   )
 }

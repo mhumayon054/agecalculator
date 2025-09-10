@@ -65,7 +65,7 @@ export default function Page() {
         id: "electronics",
         name: "Electronics & Circuits",
         description:
-          "Ohm’s law, voltage drop, resistor color codes, power and energy.",
+          "Ohm's law, voltage drop, resistor color codes, power and energy.",
         category: "Engineering",
         slug: "electronics",
       },
@@ -130,6 +130,7 @@ export default function Page() {
   }, [calculators]);
 
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleSelectBySlug = useCallback((slug: string | null) => {
     setActiveSlug(slug);
@@ -142,6 +143,7 @@ export default function Page() {
   const handleSidebarSelect = useCallback(
     (calc: { id: string; name: string; slug: string }) => {
       handleSelectBySlug(calc.slug);
+      setSidebarOpen(false); // Close sidebar after selection on mobile
     },
     [handleSelectBySlug]
   );
@@ -152,6 +154,10 @@ export default function Page() {
     },
     [handleSelectBySlug]
   );
+
+  const handleToggleSidebar = useCallback(() => {
+    setSidebarOpen(prev => !prev);
+  }, []);
 
   const selectedCard = useMemo(
     () => calculators.find((c) => c.slug === activeSlug) || null,
@@ -198,13 +204,11 @@ export default function Page() {
           slug: c.slug,
         }))}
         onSelectCalculator={handleHeaderSelect}
-        onToggleSidebar={() => {
-          // Sidebar handles its own mobile toggle. No-op here.
-        }}
+        onToggleSidebar={handleToggleSidebar}
       />
 
       <main className="pt-16">
-        <section className="container w-full max-w-full py-6 sm:py-8">
+        <section className="w-full max-w-full px-4 sm:px-4 md:px-6 py-0 sm:py-8">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
             <div className="md:col-span-3">
               <Sidebar
@@ -213,7 +217,9 @@ export default function Page() {
                 onSelect={handleSidebarSelect}
                 defaultOpenCategories={categories.map((c) => c.id)}
                 mobileTitle="Browse calculators"
-                showMobileToggle
+                showMobileToggle={false} // This hides the mobile toggle button
+                open={sidebarOpen} // Control sidebar open state
+                onOpenChange={setSidebarOpen} // Control sidebar open state
               />
             </div>
 
