@@ -26,8 +26,13 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Ruler, PencilRuler, TestTube, Weight, SquareSigma, SquarePi, Radical, RulerDimensionLine } from "lucide-react"
-import { create, all, MathJsStatic, MathJsChain, MathNumericType, MathType } from "mathjs"
+import { create, all } from "mathjs"
+import type { BigNumber } from "mathjs"
+
+// Define a type alias for numeric values used in mathjs calculations
+type MathNumericType = number | BigNumber;
 import clsx from "clsx"
+
 
 type Props = {
   className?: string
@@ -48,7 +53,7 @@ type Props = {
 const math = create(all, {
   number: "BigNumber",
   precision: 64,
-}) as unknown as MathJsStatic
+})
 
 // Utilities
 function parseNumeric(input: string): MathNumericType | null {
@@ -205,12 +210,12 @@ function parseFormula(formula: string): Record<string, number> {
   return result
 }
 
-function computeMolecularWeight(formula: string): MathNumericType {
+function computeMolecularWeight(formula: string): BigNumber {
   const counts = parseFormula(formula)
-  let sum = big(0)
+  let sum = big(0) as BigNumber
   for (const el in counts) {
     const w = ATOMIC_WEIGHTS[el]
-    sum = math.add(sum, math.multiply(w, counts[el])) as MathNumericType
+    sum = math.add(sum, math.multiply(big(w), big(counts[el]))) as BigNumber
   }
   return sum
 }
@@ -260,6 +265,7 @@ export default function MeasurementCalculators({
       case "area": return areaUnits
       case "time": return timeUnits
       case "temperature": return ["degC", "degF", "K"] as const
+      default: return []
     }
   }, [convCategory])
 
@@ -433,7 +439,7 @@ export default function MeasurementCalculators({
         wN = w
       } else if (weightUnitForMass === "lbf") {
         // 1 lbf = 4.4482216152605 N
-        wN = math.multiply(w as any, big("4.4482216152605")) as MathNumericType
+        wN = math.number(math.multiply(w as any, big("4.4482216152605"))) as MathNumericType
       } else {
         throw new Error("Unsupported weight unit.")
       }
@@ -441,8 +447,8 @@ export default function MeasurementCalculators({
       const massKg = math.divide(wN as any, gVal as any) as MathNumericType
       const out = (() => {
         if (massOutUnit === "kg") return massKg
-        if (massOutUnit === "g") return math.multiply(massKg as any, big(1000)) as MathNumericType
-        if (massOutUnit === "lb") return math.multiply(massKg as any, big("2.2046226218487757")) as MathNumericType
+        if (massOutUnit === "g") return math.number(math.multiply(massKg as any, big(1000))) as MathNumericType
+        if (massOutUnit === "lb") return math.number(math.multiply(massKg as any, big("2.2046226218487757"))) as MathNumericType
         return massKg
       })()
       return formatAll(out)
@@ -521,7 +527,7 @@ export default function MeasurementCalculators({
       // Convert if needed between mol/L and mmol/L
       const Mout = (() => {
         if (unit === "mol/L") return M
-        if (unit === "mmol/L") return math.multiply(M as any, big(1000)) as MathNumericType
+        if (unit === "mmol/L") return math.number(math.multiply(M as any, big(1000))) as MathNumericType
         return M
       })()
       return formatAll(Mout)
@@ -544,7 +550,7 @@ export default function MeasurementCalculators({
           if (!mwMassUnit) return massVal
           if (mwMassUnit === "g") return massVal
           if (mwMassUnit === "mg") return math.divide(massVal as any, big(1000)) as MathNumericType
-          if (mwMassUnit === "kg") return math.multiply(massVal as any, big(1000)) as MathNumericType
+          if (mwMassUnit === "kg") return math.number(math.multiply(massVal as any, big(1000))) as MathNumericType
           return massVal
         })()
         if (math.smallerEq(mw as any, 0 as any)) return null
@@ -904,7 +910,7 @@ export default function MeasurementCalculators({
                           <SelectValue placeholder="Select volume unit" />
                         </SelectTrigger>
                         <SelectContent>
-                          {volumeUnits.concat(["mm^3"]).map((u) => (<SelectItem key={u} value={u}>{u}</SelectItem>))}
+                          {[...volumeUnits, "mm^3"].map((u) => (<SelectItem key={u} value={u}>{u}</SelectItem>))}
                         </SelectContent>
                       </Select>
                     </div>

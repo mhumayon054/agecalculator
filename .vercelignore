@@ -1,0 +1,24 @@
+# Development and config files
+.vscode/
+.git/
+.gitignore
+.vercelignore
+.env
+.env.local
+.env.development
+.env.production
+npm-debug.log
+yarn-error.log
+
+# Documentation
+docs/
+*.md
+
+# Tests
+tests/
+__tests__/
+coverage/
+
+# Misc
+*.log
+*.DS_Store
