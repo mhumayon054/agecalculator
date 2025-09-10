@@ -152,6 +152,15 @@ function findColorByMultiplier(m: number) {
 }
 
 export default function ElectronicsCalculators({ className }: Props) {
+  // Quick-access items and controlled tab
+  const items = [
+    { key: "ohm", label: "Ohm's Law" },
+    { key: "vdrop", label: "Voltage Drop" },
+    { key: "resistor", label: "Resistor Color Codes" },
+    { key: "electricity", label: "Electricity (Power/Energy)" },
+  ] as const;
+  const [tab, setTab] = useState<(typeof items)[number]["key"]>("ohm");
+
   // Ohm's Law
   const [v, setV] = useState<string>("");
   const [i, setI] = useState<string>("");
@@ -319,8 +328,8 @@ export default function ElectronicsCalculators({ className }: Props) {
         </div>
         <Separator />
         <div className="p-4 sm:p-6">
-          <Tabs defaultValue="ohm" className="w-full">
-            <TabsList className="w-full flex flex-wrap gap-2 bg-muted/60 p-1 rounded-md">
+          <Tabs value={tab} onValueChange={(v) => setTab(v as any)} className="w-full">
+            <TabsList className="w-full flex flex-wrap gap-2 bg-muted p-1 rounded-md">
               <TabsTrigger value="ohm" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
                 <Gauge className="mr-2 h-4 w-4" aria-hidden /> Ohm&apos;s Law
               </TabsTrigger>
@@ -334,6 +343,27 @@ export default function ElectronicsCalculators({ className }: Props) {
                 <SquarePower className="mr-2 h-4 w-4" aria-hidden /> Electricity
               </TabsTrigger>
             </TabsList>
+
+            {/* Quick-access sub links */}
+            <div className="mt-3">
+              <div className="text-xs font-medium text-muted-foreground">Electronics & Circuits</div>
+              <ul className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1.5">
+                {items.map((it) => (
+                  <li key={it.key}>
+                    <button
+                      type="button"
+                      className={cn(
+                        "w-full text-left rounded-md px-2 py-1.5 text-sm hover:bg-muted transition",
+                        tab === it.key && "bg-card shadow-sm"
+                      )}
+                      onClick={() => setTab(it.key as any)}
+                    >
+                      {it.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             <TabsContent value="ohm" className="mt-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

@@ -242,6 +242,21 @@ export default function MeasurementCalculators({
   // Shared helpers
   const [tempKey, setTempKey] = useState(0) // to reset inputs on clear if needed
 
+  // Quick-access items and controlled tab
+  const items = [
+    { key: "height", label: "Height Calculator" },
+    { key: "conversion", label: "Conversion Calculator" },
+    { key: "gdp", label: "GDP Calculator" },
+    { key: "density", label: "Density Calculator" },
+    { key: "mass", label: "Mass Calculator" },
+    { key: "weight", label: "Weight Calculator" },
+    { key: "speed", label: "Speed Calculator" },
+    { key: "molarity", label: "Molarity Calculator" },
+    { key: "molecularWeight", label: "Molecular Weight" },
+    { key: "roman", label: "Roman Numerals" },
+  ] as const
+  const [tab, setTab] = useState<(typeof items)[number]["key"]>(initialTab as any)
+
   // Height calculator state
   const [heightCm, setHeightCm] = useState<string>("")
   const [heightFeet, setHeightFeet] = useState<string>("")
@@ -692,7 +707,7 @@ export default function MeasurementCalculators({
       </CardHeader>
       <CardContent className="w-full">
         <div className="mb-4 flex items-center justify-between gap-2">
-          <Tabs defaultValue={initialTab} className="w-full">
+          <Tabs value={tab} onValueChange={(v) => setTab(v as any)} className="w-full">
             <TabsList className="flex w-full flex-wrap gap-1 bg-secondary">
               <TabsTrigger value="height" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                 <PencilRuler className="mr-2 h-4 w-4" aria-hidden="true" /> Height
@@ -725,6 +740,27 @@ export default function MeasurementCalculators({
                 <SquarePi className="mr-2 h-4 w-4" aria-hidden="true" /> Roman
               </TabsTrigger>
             </TabsList>
+
+            {/* Quick-access sub links */}
+            <div className="mt-3">
+              <div className="text-xs font-medium text-muted-foreground">Measurements & Units</div>
+              <ul className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1.5">
+                {items.map((it) => (
+                  <li key={it.key}>
+                    <button
+                      type="button"
+                      className={clsx(
+                        "w-full text-left rounded-md px-2 py-1.5 text-sm hover:bg-muted transition",
+                        tab === it.key && "bg-card shadow-sm"
+                      )}
+                      onClick={() => setTab(it.key as any)}
+                    >
+                      {it.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             <div className="mt-4" key={tempKey}>
               {/* Height Calculator */}
