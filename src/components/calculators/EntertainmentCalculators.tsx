@@ -120,13 +120,6 @@ export default function EntertainmentCalculators({
 }: EntertainmentCalculatorsProps) {
   const isClient = useIsClient();
 
-  // Quick-access items and controlled tab
-  const items = [
-    { key: "dice", label: "Dice Roller" },
-    { key: "love", label: "Love Calculator" },
-  ] as const;
-  const [tab, setTab] = useState<(typeof items)[number]["key"]>(defaultTab as any);
-
   // Dice Roller State
   const [configs, setConfigs] = useState<DiceConfig[]>([{ id: cryptoId(), sides: 6, count: 1 }]);
   const [isRolling, setIsRolling] = useState(false);
@@ -563,7 +556,7 @@ export default function EntertainmentCalculators({
             </CardContent>
             <CardFooter className="flex flex-wrap items-center justify-between gap-2">
               <div className="text-xs text-muted-foreground">
-                Tip: Use presets for common rolls. Toggle "Drop lowest" for ability scores.
+                Tip: Use presets for common rolls. Toggle “Drop lowest” for ability scores.
               </div>
               <div className="flex items-center gap-2">
                 <Button

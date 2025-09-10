@@ -89,18 +89,6 @@ function uid() {
 }
 
 export default function UtilityCalculators({ className, style, layout = "full" }: ClassNameProps) {
-  // Quick-access items and controlled tab
-  const items = [
-    { key: "gpa", label: "GPA Calculator" },
-    { key: "grade", label: "Grade Calculator" },
-    { key: "bra", label: "Bra Size Calculator" },
-    { key: "shoe", label: "Shoe Size Conversion" },
-    { key: "tip", label: "Tip Calculator" },
-    { key: "golf", label: "Golf Handicap Calculator" },
-    { key: "sleep", label: "Sleep Calculator" },
-  ] as const;
-  const [tab, setTab] = useState<(typeof items)[number]["key"]>("gpa");
-
   // GPA Calculator
   const [gpaScale, setGpaScale] = useState<"4.0" | "4.3" | "5.0">("4.0");
   const [gpaCourses, setGpaCourses] = useState<GpaCourse[]>([
@@ -322,7 +310,7 @@ export default function UtilityCalculators({ className, style, layout = "full" }
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-0">
-          <Tabs value={tab} onValueChange={(v) => setTab(v as any)} className="w-full">
+          <Tabs defaultValue="gpa" className="w-full">
             <div className="overflow-x-auto">
               <TabsList className="min-w-max">
                 <TabsTrigger value="gpa" aria-label="GPA Calculator">
@@ -354,27 +342,6 @@ export default function UtilityCalculators({ className, style, layout = "full" }
                   Sleep
                 </TabsTrigger>
               </TabsList>
-            </div>
-
-            {/* Quick-access sub links */}
-            <div className="mt-3">
-              <div className="text-xs font-medium text-muted-foreground">Everyday Utilities</div>
-              <ul className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1.5">
-                {items.map((it) => (
-                  <li key={it.key}>
-                    <button
-                      type="button"
-                      className={[
-                        "w-full text-left rounded-md px-2 py-1.5 text-sm hover:bg-muted transition",
-                        tab === it.key ? "bg-card shadow-sm" : "",
-                      ].join(" ")}
-                      onClick={() => setTab(it.key as any)}
-                    >
-                      {it.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
             </div>
 
             {/* GPA Calculator */}

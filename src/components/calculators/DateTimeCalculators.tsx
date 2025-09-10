@@ -948,23 +948,9 @@ function DayOfWeekCalculator() {
 /* ========== Main Aggregated Component ========== */
 
 export default function DateTimeCalculators({ className, layout = "full" }: ClassProp) {
-  const items = [
-    { key: "age", label: "Age Calculator" },
-    { key: "date", label: "Date Calculator" },
-    { key: "time", label: "Time Calculator" },
-    { key: "hours", label: "Hours Calculator" },
-    { key: "timecard", label: "Time Card Calculator" },
-    { key: "timezone", label: "Time Zone Calculator" },
-    { key: "duration", label: "Time Duration Calculator" },
-    { key: "daycounter", label: "Day Counter" },
-    { key: "weekday", label: "Day of the Week Calculator" },
-  ] as const;
-
-  const [tab, setTab] = useState<(typeof items)[number]["key"]>("age");
-
   return (
     <section className={cx("w-full", className)}>
-      <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)} className="w-full">
+      <Tabs defaultValue="age" className="w-full">
         <TabsList className="flex w-full overflow-x-auto rounded-lg bg-secondary p-1">
           <TabsTrigger value="age" className="data-[state=active]:bg-card">
             <CalendarDays className="mr-2 h-4 w-4" aria-hidden /> Age
@@ -994,28 +980,6 @@ export default function DateTimeCalculators({ className, layout = "full" }: Clas
             <CalendarDays className="mr-2 h-4 w-4" aria-hidden /> Weekday
           </TabsTrigger>
         </TabsList>
-
-        {/* Quick-access sub links */}
-        <div className="mt-3">
-          <div className="text-xs font-medium text-muted-foreground">Date & Time</div>
-          <ul className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1.5">
-            {items.map((it) => (
-              <li key={it.key}>
-                <button
-                  type="button"
-                  className={cx(
-                    "w-full text-left rounded-md px-2 py-1.5 text-sm",
-                    "hover:bg-muted transition",
-                    tab === it.key ? "bg-card shadow-sm" : ""
-                  )}
-                  onClick={() => setTab(it.key)}
-                >
-                  {it.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
 
         <div className={cx("mt-4", layout === "compact" ? "space-y-4" : "space-y-6")}>
           <TabsContent value="age">

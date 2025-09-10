@@ -129,17 +129,6 @@ export default function TransportationCalculators({
   className,
   defaultTab = "fuel-cost",
 }: TransportationCalculatorsProps) {
-  // Quick-access items and controlled tab
-  const items = [
-    { key: "fuel-cost", label: "Fuel Cost Calculator" },
-    { key: "gas-mileage", label: "Gas Mileage Calculator" },
-    { key: "horsepower", label: "Horsepower Calculator" },
-    { key: "engine-hp", label: "Engine HP Calculator" },
-    { key: "mileage", label: "Mileage Calculator" },
-    { key: "tire-size", label: "Tire Size Calculator" },
-  ] as const
-  const [tab, setTab] = React.useState<(typeof items)[number]["key"]>(defaultTab as any)
-
   // Shared units state where helpful
   const [distanceUnitFC, setDistanceUnitFC] = React.useState<DistanceUnit>("mi")
   const [economyMode, setEconomyMode] = React.useState<EconomyMode>("mpg")
@@ -242,7 +231,7 @@ export default function TransportationCalculators({
           </div>
         </CardHeader>
         <CardContent className="pt-0">
-          <Tabs value={tab} onValueChange={(v) => setTab(v as any)} className="w-full">
+          <Tabs defaultValue={defaultTab} className="w-full">
             <TabsList className="flex flex-wrap gap-2 bg-muted p-1 rounded-lg">
               <TabsTrigger value="fuel-cost" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
                 <Fuel className="size-4 mr-2" aria-hidden />
@@ -269,27 +258,6 @@ export default function TransportationCalculators({
                 Tire Size
               </TabsTrigger>
             </TabsList>
-
-            {/* Quick-access sub links */}
-            <div className="mt-3">
-              <div className="text-xs font-medium text-muted-foreground">Transportation</div>
-              <ul className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1.5">
-                {items.map((it) => (
-                  <li key={it.key}>
-                    <button
-                      type="button"
-                      className={[
-                        "w-full text-left rounded-md px-2 py-1.5 text-sm hover:bg-muted transition",
-                        tab === it.key ? "bg-card shadow-sm" : "",
-                      ].join(" ")}
-                      onClick={() => setTab(it.key as any)}
-                    >
-                      {it.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
 
             {/* Fuel Cost Calculator */}
             <TabsContent value="fuel-cost" className="mt-6">

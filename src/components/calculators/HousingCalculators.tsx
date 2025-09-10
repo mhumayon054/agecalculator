@@ -96,21 +96,6 @@ export default function HousingCalculators({
   className,
   defaultTab = "concrete",
 }: HousingCalculatorsProps) {
-  const items = React.useMemo(
-    () => [
-      { key: "concrete", label: "Concrete Calculator" },
-      { key: "btu", label: "BTU Calculator" },
-      { key: "square-footage", label: "Square Footage Calculator" },
-      { key: "stair", label: "Stair Calculator" },
-      { key: "roofing", label: "Roofing Calculator" },
-      { key: "tile", label: "Tile Calculator" },
-      { key: "mulch", label: "Mulch Calculator" },
-      { key: "gravel", label: "Gravel Calculator" },
-    ],
-    []
-  );
-  const [tab, setTab] = React.useState<string>(defaultTab);
-
   return (
     <section className={cn("w-full", className)} aria-label="Housing and Building Calculators">
       <Card className="bg-card text-card-foreground shadow-sm border border-border">
@@ -129,7 +114,7 @@ export default function HousingCalculators({
           </div>
         </CardHeader>
         <CardContent className="pt-0">
-          <Tabs value={tab} onValueChange={setTab} className="w-full">
+          <Tabs defaultValue={defaultTab} className="w-full">
             <div className="overflow-x-auto -mx-2 px-2">
               <TabsList className="min-w-max">
                 <TabsTrigger value="concrete" className="gap-2">
@@ -157,27 +142,6 @@ export default function HousingCalculators({
                   <Construction className="size-4" aria-hidden /> Gravel
                 </TabsTrigger>
               </TabsList>
-            </div>
-
-            {/* Quick-access sub links */}
-            <div className="mt-3">
-              <div className="text-xs font-medium text-muted-foreground">Housing & Building</div>
-              <ul className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1.5">
-                {items.map((it) => (
-                  <li key={it.key}>
-                    <button
-                      type="button"
-                      className={[
-                        "w-full text-left rounded-md px-2 py-1.5 text-sm hover:bg-muted transition",
-                        tab === it.key ? "bg-card shadow-sm" : "",
-                      ].join(" ")}
-                      onClick={() => setTab(it.key)}
-                    >
-                      {it.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
             </div>
 
             <TabsContent value="concrete" className="mt-6">

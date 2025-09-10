@@ -149,14 +149,6 @@ export default function WeatherCalculators({
   const [tUnit, setTUnit] = React.useState<TemperatureUnit>("F");
   const [wUnit, setWUnit] = React.useState<WindUnit>("mph");
 
-  // Quick-access items and controlled tab
-  const items = [
-    { key: "heatindex", label: "Heat Index Calculator" },
-    { key: "windchill", label: "Wind Chill Calculator" },
-    { key: "dewpoint", label: "Dew Point Calculator" },
-  ] as const;
-  const [tab, setTab] = React.useState<(typeof items)[number]["key"]>(defaultTab as any);
-
   // Heat Index state
   const [hiTemp, setHiTemp] = React.useState<string>("90");
   const [hiRh, setHiRh] = React.useState<string>("60");
@@ -252,7 +244,7 @@ export default function WeatherCalculators({
         </CardHeader>
 
         <CardContent className="pt-2">
-          <Tabs value={tab} onValueChange={(v) => setTab(v as any)} className="w-full">
+          <Tabs defaultValue={defaultTab} className="w-full">
             <TabsList className="bg-secondary">
               <TabsTrigger value="heatindex" className="min-w-0">
                 <ThermometerSun className="h-4 w-4 mr-2" aria-hidden="true" />
@@ -267,27 +259,6 @@ export default function WeatherCalculators({
                 Dew Point
               </TabsTrigger>
             </TabsList>
-
-            {/* Quick-access sub links */}
-            <div className="mt-3">
-              <div className="text-xs font-medium text-muted-foreground">Weather</div>
-              <ul className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1.5">
-                {items.map((it) => (
-                  <li key={it.key}>
-                    <button
-                      type="button"
-                      className={cn(
-                        "w-full text-left rounded-md px-2 py-1.5 text-sm hover:bg-muted transition",
-                        tab === it.key && "bg-card shadow-sm"
-                      )}
-                      onClick={() => setTab(it.key as any)}
-                    >
-                      {it.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
 
             {/* Heat Index */}
             <TabsContent value="heatindex" className="mt-4">

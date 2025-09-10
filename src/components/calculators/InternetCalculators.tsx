@@ -92,13 +92,6 @@ function strengthLabel(bits: number) {
 
 export default function InternetCalculators({ className }: Props) {
   // Subnet state
-  const items = [
-    { key: "subnet", label: "IP Subnet Calculator" },
-    { key: "password", label: "Password Generator" },
-    { key: "bandwidth", label: "Bandwidth Calculator" },
-  ] as const;
-  const [tab, setTab] = useState<(typeof items)[number]["key"]>("subnet");
-
   const [ip, setIp] = useState("192.168.1.10")
   const [cidr, setCidr] = useState<number>(24)
   const subnet = useMemo(() => {
@@ -222,7 +215,7 @@ export default function InternetCalculators({ className }: Props) {
           </p>
         </CardHeader>
         <CardContent className="pt-0">
-          <Tabs value={tab} onValueChange={(v) => setTab(v as any)} className="w-full">
+          <Tabs defaultValue="subnet" className="w-full">
             <TabsList className="grid grid-cols-1 sm:grid-cols-3 w-full">
               <TabsTrigger value="subnet" className="gap-2">
                 <Network className="h-4 w-4" aria-hidden /> IP Subnet
@@ -234,27 +227,6 @@ export default function InternetCalculators({ className }: Props) {
                 <Gauge className="h-4 w-4" aria-hidden /> Bandwidth
               </TabsTrigger>
             </TabsList>
-
-            {/* Quick-access sub links */}
-            <div className="mt-3">
-              <div className="text-xs font-medium text-muted-foreground">Internet & Networking</div>
-              <ul className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1.5">
-                {items.map((it) => (
-                  <li key={it.key}>
-                    <button
-                      type="button"
-                      className={[
-                        "w-full text-left rounded-md px-2 py-1.5 text-sm hover:bg-muted transition",
-                        tab === it.key ? "bg-card shadow-sm" : "",
-                      ].join(" ")}
-                      onClick={() => setTab(it.key as any)}
-                    >
-                      {it.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
 
             <TabsContent value="subnet" className="mt-6">
               <div className="grid gap-4">
