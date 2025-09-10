@@ -254,7 +254,8 @@ export default function UtilityCalculators({ className, style, layout = "full" }
     const avg = selected.reduce((s, d) => s + d, 0) / selected.length;
     // USGA legacy used 0.96 multiplier; WHS does not. We'll follow WHS (no 0.96).
     let index = avg + adjustment;
-    return Math.max(-5.0, Number.isFinite(index) ? parseFloat(index.toFixed(1)) : null);
+    if (!Number.isFinite(index)) return null;
+    return Math.max(-5.0, parseFloat(index.toFixed(1)));
   }, [rounds]);
 
   function updateRound(id: string, patch: Partial<Round>) {
