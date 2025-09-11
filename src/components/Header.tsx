@@ -130,7 +130,32 @@ export default function Header({
             >
               All-in-One Calculators
             </Link>
+
+            {/* Mobile top-level nav */}
+            <details className="relative md:hidden ml-2">
+              <summary className="list-none cursor-pointer text-sm px-2 py-1 rounded-md hover:bg-secondary">Menu</summary>
+              <div className="absolute z-50 mt-2 w-56 rounded-md border border-border bg-popover shadow-sm p-2">
+                <nav className="flex flex-col text-sm">
+                  <Link href="/" className="px-2 py-1.5 rounded hover:bg-muted">Home</Link>
+                  <Link href="/blog" className="px-2 py-1.5 rounded hover:bg-muted">Blogs</Link>
+                  <Link href="/contact" className="px-2 py-1.5 rounded hover:bg-muted">Contact</Link>
+                  <Link href="/about" className="px-2 py-1.5 rounded hover:bg-muted">About</Link>
+                  <Link href="/terms" className="px-2 py-1.5 rounded hover:bg-muted">Terms & Conditions</Link>
+                  <Link href="/privacy-policy" className="px-2 py-1.5 rounded hover:bg-muted">Privacy Policy</Link>
+                </nav>
+              </div>
+            </details>
           </div>
+
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-4 text-sm">
+            <Link href="/" className="hover:opacity-90">Home</Link>
+            <Link href="/blog" className="hover:opacity-90">Blogs</Link>
+            <Link href="/contact" className="hover:opacity-90">Contact</Link>
+            <Link href="/about" className="hover:opacity-90">About</Link>
+            <Link href="/terms" className="hover:opacity-90">Terms & Conditions</Link>
+            <Link href="/privacy-policy" className="hover:opacity-90">Privacy Policy</Link>
+          </nav>
 
           <div className="w-full max-w-full md:max-w-none md:flex-1 min-w-0 flex justify-end">
             <div

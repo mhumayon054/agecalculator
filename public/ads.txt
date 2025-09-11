@@ -1,0 +1,6 @@
+# Authorized Digital Sellers (ads.txt)
+# Replace with your real Google AdSense publisher account once approved
+# Format: google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+
+# Example (DO NOT USE IN PRODUCTION):
+# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0

@@ -65,7 +65,7 @@ export default function Page() {
         id: "electronics",
         name: "Electronics & Circuits",
         description:
-          "Ohm’s law, voltage drop, resistor color codes, power and energy.",
+          "Ohm's law, voltage drop, resistor color codes, power and energy.",
         category: "Engineering",
         slug: "electronics",
       },
@@ -183,6 +183,21 @@ export default function Page() {
           <HomePage
             calculators={calculators}
             onSelect={(calc) => handleSelectBySlug(calc.slug ?? null)}
+            getHref={(calc) => {
+              // Map homepage cards to category routes for SEO-friendly pages
+              const map: Record<string, string> = {
+                "date-time": "/date-and-time",
+                housing: "/housing-and-building",
+                measurements: "/measurements-and-units",
+                electronics: "/electronics-and-circuits",
+                internet: "/internet-and-networking",
+                utilities: "/everyday-utilities",
+                weather: "/weather",
+                transport: "/transportation",
+                entertainment: "/entertainment",
+              };
+              return calc.slug ? map[calc.slug] : undefined;
+            }}
           />
         );
     }

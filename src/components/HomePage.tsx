@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { LayoutGrid, Grid3x3, Proportions, Columns3, TabletSmartphone } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -61,6 +61,14 @@ export default function HomePage({
     availableCategories.includes(defaultCategory) ? defaultCategory : "All",
   );
 
+  const [recent, setRecent] = useState<Calculator[]>([]);
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("recent_calculators");
+      if (raw) setRecent(JSON.parse(raw));
+    } catch {}
+  }, []);
+
   const filtered = useMemo(() => {
     if (activeCategory === "All") return calculators;
     return calculators.filter((c) => c.category === activeCategory);
@@ -68,6 +76,16 @@ export default function HomePage({
 
   // Layout animation delay per-card for subtle cascade
   const getDelayMs = (index: number) => Math.min(index * 30, 180);
+
+  function remember(calc: Calculator) {
+    try {
+      const raw = localStorage.getItem("recent_calculators");
+      const list: Calculator[] = raw ? JSON.parse(raw) : [];
+      const next = [calc, ...list.filter((c) => c.slug !== calc.slug)].slice(0, 8);
+      localStorage.setItem("recent_calculators", JSON.stringify(next));
+      setRecent(next);
+    } catch {}
+  }
 
   return (
     <section
@@ -123,6 +141,31 @@ export default function HomePage({
           </div>
         </div>
       </div>
+
+      {/* Recently used */}
+      {recent.length > 0 && (
+        <div className="mt-6 rounded-[var(--radius)] bg-card ring-1 ring-border p-4">
+          <div className="mb-2 text-sm font-semibold">Recently used</div>
+          <div className="flex flex-wrap gap-2">
+            {recent.map((c) => {
+              const href = getHref ? getHref(c) : undefined;
+              const chip = (
+                <span className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs bg-secondary hover:bg-muted">
+                  {getCategoryIcon(c.category)}
+                  <span className="truncate max-w-[12rem]">{c.name}</span>
+                </span>
+              );
+              return href ? (
+                <Link key={`${c.id}-${c.slug}`} href={href} className="focus-visible:ring-2 focus-visible:ring-primary rounded-full">
+                  {chip}
+                </Link>
+              ) : (
+                <span key={`${c.id}-${c.slug}`}>{chip}</span>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Grid */}
       <div
@@ -188,8 +231,11 @@ export default function HomePage({
                           variant="secondary"
                           className="w-full justify-center bg-secondary hover:bg-muted transition-colors"
                           onClick={(e) => {
-                            e.preventDefault();
-                            if (onSelect) onSelect(calc);
+                            if (onSelect) {
+                              e.preventDefault();
+                              remember(calc);
+                              onSelect(calc);
+                            }
                           }}
                         >
                           Open calculator
@@ -207,6 +253,7 @@ export default function HomePage({
                     href={href}
                     key={calc.id}
                     className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-[var(--radius)]"
+                    onClick={() => remember(calc)}
                   >
                     {content}
                   </Link>
