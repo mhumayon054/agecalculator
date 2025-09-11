@@ -111,12 +111,12 @@ export default function Header({
       style={style}
       role="banner"
     >
-      <div className="container w-full max-w-full px-4 md:px-6">
+      <div className="container w-full max-w-full">
         <div className="h-16 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
             <button
               type="button"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-transparent hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 active:scale-[0.98] transition"
+              className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-md border border-transparent hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 active:scale-[0.98] transition"
               aria-label="Toggle sidebar"
               onClick={onToggleSidebar}
             >
@@ -218,7 +218,7 @@ export default function Header({
                     <div className="p-3 flex items-center gap-2 text-sm text-muted-foreground">
                       <SearchX className="h-4 w-4" aria-hidden="true" />
                       <span className="min-w-0 break-words">
-                        No results for "{query}"
+                        No results for “{query}”
                       </span>
                     </div>
                   )}

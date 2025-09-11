@@ -563,8 +563,7 @@ export default function ElectronicsCalculators({ className }: Props) {
                   </div>
                   <div className="flex items-center gap-2 mt-6">
                     <span className="text-xs text-muted-foreground">Show example tolerance</span>
-                    <Switch checked disabled aria-label="Example tolerance is shown in results" />
-                  
+                    <Switch checked readOnly aria-label="Example tolerance is shown in results" />
                   </div>
                 </div>
 
