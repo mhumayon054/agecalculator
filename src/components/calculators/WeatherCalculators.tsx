@@ -245,20 +245,24 @@ export default function WeatherCalculators({
 
         <CardContent className="pt-2">
           <Tabs defaultValue={defaultTab} className="w-full">
-            <TabsList className="bg-secondary">
-              <TabsTrigger value="heatindex" className="min-w-0">
-                <ThermometerSun className="h-4 w-4 mr-2" aria-hidden="true" />
-                Heat Index
-              </TabsTrigger>
-              <TabsTrigger value="windchill" className="min-w-0">
-                <Wind className="h-4 w-4 mr-2" aria-hidden="true" />
-                Wind Chill
-              </TabsTrigger>
-              <TabsTrigger value="dewpoint" className="min-w-0">
-                <Thermometer className="h-4 w-4 mr-2" aria-hidden="true" />
-                Dew Point
-              </TabsTrigger>
-            </TabsList>
+            <div className="relative">
+  <div className="overflow-x-auto">
+    <TabsList className="flex min-w-max bg-secondary p-1 rounded-lg">
+      <TabsTrigger value="heatindex" className="flex-shrink-0 data-[state=active]:bg-card px-3">
+        <ThermometerSun className="h-4 w-4 mr-2" aria-hidden="true" />
+        Heat Index
+      </TabsTrigger>
+      <TabsTrigger value="windchill" className="flex-shrink-0 data-[state=active]:bg-card px-3">
+        <Wind className="h-4 w-4 mr-2" aria-hidden="true" />
+        Wind Chill
+      </TabsTrigger>
+      <TabsTrigger value="dewpoint" className="flex-shrink-0 data-[state=active]:bg-card px-3">
+        <Thermometer className="h-4 w-4 mr-2" aria-hidden="true" />
+        Dew Point
+      </TabsTrigger>
+    </TabsList>
+  </div>
+</div>
 
             {/* Heat Index */}
             <TabsContent value="heatindex" className="mt-4">

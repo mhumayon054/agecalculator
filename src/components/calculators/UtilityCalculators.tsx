@@ -683,7 +683,7 @@ export default function UtilityCalculators({ className, style, layout = "full" }
                   </div>
                 </div>
 
-                <div className="rounded-lg bg-secondary p-4">
+                <div className="rounded-lg bg-secondary p-4 mb-4">
                   <p className="text-sm text-muted-foreground">Estimated Size</p>
                   <p className="text-2xl font-bold text-primary">{braResult ? braResult.label : "—"}</p>
                   <p className="mt-2 text-sm text-muted-foreground">
@@ -719,7 +719,7 @@ export default function UtilityCalculators({ className, style, layout = "full" }
             {/* Shoe Size Conversion */}
             <TabsContent value="shoe" className="mt-6">
               <div className={["w-full", sectionGap].join(" ")}>
-                <div className={["grid grid-cols-1 sm:grid-cols-3 gap-4", cardPad].join(" ") + " rounded-lg bg-secondary"}>
+                <div className={["grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4", cardPad].join(" ") + " rounded-lg bg-secondary"}>
                   <div className="flex flex-col gap-2">
                     <Label>Input System</Label>
                     <Select

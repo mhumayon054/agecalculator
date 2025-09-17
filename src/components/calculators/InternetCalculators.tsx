@@ -216,17 +216,21 @@ export default function InternetCalculators({ className }: Props) {
         </CardHeader>
         <CardContent className="pt-0">
           <Tabs defaultValue="subnet" className="w-full">
-            <TabsList className="grid grid-cols-1 sm:grid-cols-3 w-full">
-              <TabsTrigger value="subnet" className="gap-2">
-                <Network className="h-4 w-4" aria-hidden /> IP Subnet
-              </TabsTrigger>
-              <TabsTrigger value="password" className="gap-2">
-                <Binary className="h-4 w-4" aria-hidden /> Password
-              </TabsTrigger>
-              <TabsTrigger value="bandwidth" className="gap-2">
-                <Gauge className="h-4 w-4" aria-hidden /> Bandwidth
-              </TabsTrigger>
-            </TabsList>
+           <div className="relative">
+  <div className="overflow-x-auto">
+    <TabsList className="flex min-w-max w-full bg-secondary p-1 rounded-lg">
+      <TabsTrigger value="subnet" className="flex-shrink-0 data-[state=active]:bg-card px-3 gap-2">
+        <Network className="h-4 w-4" aria-hidden /> IP Subnet
+      </TabsTrigger>
+      <TabsTrigger value="password" className="flex-shrink-0 data-[state=active]:bg-card px-3 gap-2">
+        <Binary className="h-4 w-4" aria-hidden /> Password
+      </TabsTrigger>
+      <TabsTrigger value="bandwidth" className="flex-shrink-0 data-[state=active]:bg-card px-3 gap-2">
+        <Gauge className="h-4 w-4" aria-hidden /> Bandwidth
+      </TabsTrigger>
+    </TabsList>
+  </div>
+</div>
 
             <TabsContent value="subnet" className="mt-6">
               <div className="grid gap-4">

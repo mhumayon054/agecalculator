@@ -951,35 +951,41 @@ export default function DateTimeCalculators({ className, layout = "full" }: Clas
   return (
     <section className={cx("w-full", className)}>
       <Tabs defaultValue="age" className="w-full">
-        <TabsList className="flex w-full overflow-x-auto rounded-lg bg-secondary p-1">
-          <TabsTrigger value="age" className="data-[state=active]:bg-card">
-            <CalendarDays className="mr-2 h-4 w-4" aria-hidden /> Age
-          </TabsTrigger>
-          <TabsTrigger value="date" className="data-[state=active]:bg-card">
-            <CalendarPlus className="mr-2 h-4 w-4" aria-hidden /> Date
-          </TabsTrigger>
-          <TabsTrigger value="time" className="data-[state=active]:bg-card">
-            <Clock className="mr-2 h-4 w-4" aria-hidden /> Time
-          </TabsTrigger>
-          <TabsTrigger value="hours" className="data-[state=active]:bg-card">
-            <Clock3 className="mr-2 h-4 w-4" aria-hidden /> Hours
-          </TabsTrigger>
-          <TabsTrigger value="timecard" className="data-[state=active]:bg-card">
-            <Timer className="mr-2 h-4 w-4" aria-hidden /> Time Card
-          </TabsTrigger>
-          <TabsTrigger value="timezone" className="data-[state=active]:bg-card">
-            <CalendarClock className="mr-2 h-4 w-4" aria-hidden /> Time Zone
-          </TabsTrigger>
-          <TabsTrigger value="duration" className="data-[state=active]:bg-card">
-            <Timer className="mr-2 h-4 w-4" aria-hidden /> Duration
-          </TabsTrigger>
-          <TabsTrigger value="daycounter" className="data-[state=active]:bg-card">
-            <CalendarSearch className="mr-2 h-4 w-4" aria-hidden /> Day Counter
-          </TabsTrigger>
-          <TabsTrigger value="weekday" className="data-[state=active]:bg-card">
-            <CalendarDays className="mr-2 h-4 w-4" aria-hidden /> Weekday
-          </TabsTrigger>
-        </TabsList>
+        <div className="relative">
+          <TabsList className="flex w-full overflow-x-auto rounded-lg bg-secondary p-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]  calculator-inner-tabs-scollerbar">
+            <TabsTrigger value="age" className="flex-shrink-0 data-[state=active]:bg-card">
+              <CalendarDays className=" mr-1 h-4 w-4" aria-hidden /> Age
+            </TabsTrigger>
+            <TabsTrigger value="date" className="flex-shrink-0 data-[state=active]:bg-card">
+              <CalendarPlus className=" mr-1 h-4 w-4" aria-hidden /> Date
+            </TabsTrigger>
+            <TabsTrigger value="time" className="flex-shrink-0 data-[state=active]:bg-card">
+              <Clock className=" mr-1 h-4 w-4" aria-hidden /> Time
+            </TabsTrigger>
+            <TabsTrigger value="hours" className="flex-shrink-0 data-[state=active]:bg-card">
+              <Clock3 className=" mr-1 h-4 w-4" aria-hidden /> Hours
+            </TabsTrigger>
+            <TabsTrigger value="timecard" className="flex-shrink-0 data-[state=active]:bg-card">
+              <Timer className=" mr-1 h-4 w-4" aria-hidden /> Time Card
+            </TabsTrigger>
+            <TabsTrigger value="timezone" className="flex-shrink-0 data-[state=active]:bg-card">
+              <CalendarClock className=" mr-1 h-4 w-4" aria-hidden /> Time Zone
+            </TabsTrigger>
+            <TabsTrigger value="duration" className="flex-shrink-0 data-[state=active]:bg-card">
+              <Timer className=" mr-1 h-4 w-4" aria-hidden /> Duration
+            </TabsTrigger>
+            <TabsTrigger value="daycounter" className="flex-shrink-0 data-[state=active]:bg-card">
+              <CalendarSearch className=" mr-1 h-4 w-4" aria-hidden /> Day Counter
+            </TabsTrigger>
+            <TabsTrigger value="weekday" className="flex-shrink-0 data-[state=active]:bg-card">
+              <CalendarDays className=" mr-1 h-4 w-4" aria-hidden /> Weekday
+            </TabsTrigger>
+          </TabsList>
+          
+          {/* Gradient fade indicators for scrollable content */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-6 bg-gradient-to-r from-background from-10% to-transparent md:flex" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-6 bg-gradient-to-l from-background from-10% to-transparent md:flex" />
+        </div>
 
         <div className={cx("mt-4", layout === "compact" ? "space-y-4" : "space-y-6")}>
           <TabsContent value="age">

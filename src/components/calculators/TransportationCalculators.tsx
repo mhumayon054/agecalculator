@@ -231,33 +231,37 @@ export default function TransportationCalculators({
           </div>
         </CardHeader>
         <CardContent className="pt-0">
-          <Tabs defaultValue={defaultTab} className="w-full">
-            <TabsList className="flex flex-wrap gap-2 bg-muted p-1 rounded-lg">
-              <TabsTrigger value="fuel-cost" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
-                <Fuel className="size-4 mr-2" aria-hidden />
-                Fuel Cost
-              </TabsTrigger>
-              <TabsTrigger value="gas-mileage" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
-                <Gauge className="size-4 mr-2" aria-hidden />
-                Gas Mileage
-              </TabsTrigger>
-              <TabsTrigger value="horsepower" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
-                <CircleGauge className="size-4 mr-2" aria-hidden />
-                Horsepower
-              </TabsTrigger>
-              <TabsTrigger value="engine-hp" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
-                <CarFront className="size-4 mr-2" aria-hidden />
-                Engine HP
-              </TabsTrigger>
-              <TabsTrigger value="mileage" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
-                <Ruler className="size-4 mr-2" aria-hidden />
-                Mileage
-              </TabsTrigger>
-              <TabsTrigger value="tire-size" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
-                <RulerDimensionLine className="size-4 mr-2" aria-hidden />
-                Tire Size
-              </TabsTrigger>
-            </TabsList>
+  <Tabs defaultValue={defaultTab} className="w-full">
+    <div className="relative">
+      <div className="overflow-x-auto">
+        <TabsList className="flex min-w-max gap-2 bg-muted p-1 rounded-lg">
+          <TabsTrigger value="fuel-cost" className="flex-shrink-0 data-[state=active]:bg-card data-[state=active]:shadow-sm">
+            <Fuel className="size-4 mr-2" aria-hidden />
+            Fuel Cost
+          </TabsTrigger>
+          <TabsTrigger value="gas-mileage" className="flex-shrink-0 data-[state=active]:bg-card data-[state=active]:shadow-sm">
+            <Gauge className="size-4 mr-2" aria-hidden />
+            Gas Mileage
+          </TabsTrigger>
+          <TabsTrigger value="horsepower" className="flex-shrink-0 data-[state=active]:bg-card data-[state=active]:shadow-sm">
+            <CircleGauge className="size-4 mr-2" aria-hidden />
+            Horsepower
+          </TabsTrigger>
+          <TabsTrigger value="engine-hp" className="flex-shrink-0 data-[state=active]:bg-card data-[state=active]:shadow-sm">
+            <CarFront className="size-4 mr-2" aria-hidden />
+            Engine HP
+          </TabsTrigger>
+          <TabsTrigger value="mileage" className="flex-shrink-0 data-[state=active]:bg-card data-[state=active]:shadow-sm">
+            <Ruler className="size-4 mr-2" aria-hidden />
+            Mileage
+          </TabsTrigger>
+          <TabsTrigger value="tire-size" className="flex-shrink-0 data-[state=active]:bg-card data-[state=active]:shadow-sm">
+            <RulerDimensionLine className="size-4 mr-2" aria-hidden />
+            Tire Size
+          </TabsTrigger>
+        </TabsList>
+      </div>
+    </div>
 
             {/* Fuel Cost Calculator */}
             <TabsContent value="fuel-cost" className="mt-6">

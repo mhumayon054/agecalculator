@@ -303,7 +303,7 @@ export default function ElectronicsCalculators({ className }: Props) {
   }, [valueInput, bandCount]);
 
   return (
-    <section className={cn("w-full max-w-full", className)}>
+    <section className={cn("w-full max-w-full", className="electronics-calculators-main-section-div")}>
       <Card className="w-full bg-card border border-border rounded-[var(--radius)] shadow-sm">
         <div className="flex items-center justify-between p-4 sm:p-6">
           <div className="flex items-center gap-3">
@@ -318,22 +318,34 @@ export default function ElectronicsCalculators({ className }: Props) {
           </Badge>
         </div>
         <Separator />
-        <div className="p-4 sm:p-6">
+        <div className="p-4 sm:p-6 tabs-wrapper">
           <Tabs defaultValue="ohm" className="w-full">
-            <TabsList className="w-full flex flex-wrap gap-2 bg-muted/60 p-1 rounded-md">
-              <TabsTrigger value="ohm" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
-                <Gauge className="mr-2 h-4 w-4" aria-hidden /> Ohm&apos;s Law
-              </TabsTrigger>
-              <TabsTrigger value="vdrop" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
-                <PlugZap className="mr-2 h-4 w-4" aria-hidden /> Voltage Drop
-              </TabsTrigger>
-              <TabsTrigger value="resistor" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
-                <SquarePower className="mr-2 h-4 w-4" aria-hidden /> Resistors
-              </TabsTrigger>
-              <TabsTrigger value="electricity" className="data-[state=active]:bg-card data-[state=active]:shadow-sm">
-                <SquarePower className="mr-2 h-4 w-4" aria-hidden /> Electricity
-              </TabsTrigger>
-            </TabsList>
+            <TabsList className="w-full flex overflow-x-auto gap-2 bg-muted/60 p-1 rounded-md">
+  <TabsTrigger 
+    value="ohm" 
+    className="data-[state=active]:bg-card data-[state=active]:shadow-sm flex-shrink-0"
+  >
+    <Gauge className="mr-2 h-4 w-4" aria-hidden /> Ohm&apos;s Law
+  </TabsTrigger>
+  <TabsTrigger 
+    value="vdrop" 
+    className="data-[state=active]:bg-card data-[state=active]:shadow-sm flex-shrink-0"
+  >
+    <PlugZap className="mr-2 h-4 w-4" aria-hidden /> Voltage Drop
+  </TabsTrigger>
+  <TabsTrigger 
+    value="resistor" 
+    className="data-[state=active]:bg-card data-[state=active]:shadow-sm flex-shrink-0"
+  >
+    <SquarePower className="mr-2 h-4 w-4" aria-hidden /> Resistors
+  </TabsTrigger>
+  <TabsTrigger 
+    value="electricity" 
+    className="data-[state=active]:bg-card data-[state=active]:shadow-sm flex-shrink-0"
+  >
+    <SquarePower className="mr-2 h-4 w-4" aria-hidden /> Electricity
+  </TabsTrigger>
+</TabsList>
 
             <TabsContent value="ohm" className="mt-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

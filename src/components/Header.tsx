@@ -31,6 +31,7 @@ export default function Header({
   const [query, setQuery] = useState(initialQuery);
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number>(-1);
+  const [openMenu, setOpenMenu] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const listboxId = "calculator-search-listbox";
 
@@ -104,155 +105,84 @@ export default function Header({
 
   return (
     <header
-      className={[
-        "fixed inset-x-0 top-0 z-50 bg-card border-b border-border",
-        className || "",
-      ].join(" ")}
-      style={style}
-      role="banner"
-    >
-      <div className="container w-full max-w-full">
-        <div className="h-16 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3 min-w-0">
-            <button
-              type="button"
-              className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-md border border-transparent hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 active:scale-[0.98] transition"
-              aria-label="Toggle sidebar"
-              onClick={onToggleSidebar}
-            >
-              <Menu className="h-5 w-5 text-foreground" aria-hidden="true" />
-            </button>
+  className={`fixed inset-x-0 top-0 z-50 bg-card border-b border-border web-header ${className || ""}`}
+  style={style}
+  role="banner"
+>
+  <div className="container w-full max-w-full">
+    {/* parent flex lg screens: row, sm/mobile: column */}
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 rows-mobile-class">
+      
+      {/* Row 1 - Logo + Menu Button */}
+      <div className="flex items-center justify-between w-full md:w-auto">
+        <Link
+          href="/"
+          className="shrink-0 text-base sm:text-lg md:text-xl font-semibold tracking-tight text-foreground hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 rounded-md"
+          aria-label="Go to homepage"
+        >
+          All-in-One Calculators
+        </Link>
 
-            <Link
-              href="/"
-              className="shrink-0 text-base sm:text-lg md:text-xl font-semibold tracking-tight text-foreground hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 rounded-md"
-              aria-label="Go to homepage"
-            >
-              All-in-One Calculators
-            </Link>
+        <button
+          type="button"
+          className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-md border border-transparent hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 active:scale-[0.98] transition"
+          aria-label="Toggle menu"
+          onClick={() => setOpenMenu((prev) => !prev)}
+        >
+          <Menu className="h-5 w-5 text-foreground" aria-hidden="true" />
+        </button>
+      </div>
 
-            {/* Mobile top-level nav */}
-            <details className="relative md:hidden ml-2">
-              <summary className="list-none cursor-pointer text-sm px-2 py-1 rounded-md hover:bg-secondary">Menu</summary>
-              <div className="absolute z-50 mt-2 w-56 rounded-md border border-border bg-popover shadow-sm p-2">
-                <nav className="flex flex-col text-sm">
-                  <Link href="/" className="px-2 py-1.5 rounded hover:bg-muted">Home</Link>
-                  <Link href="/blog" className="px-2 py-1.5 rounded hover:bg-muted">Blogs</Link>
-                  <Link href="/contact" className="px-2 py-1.5 rounded hover:bg-muted">Contact</Link>
-                  <Link href="/about" className="px-2 py-1.5 rounded hover:bg-muted">About</Link>
-                  <Link href="/terms" className="px-2 py-1.5 rounded hover:bg-muted">Terms & Conditions</Link>
-                  <Link href="/privacy-policy" className="px-2 py-1.5 rounded hover:bg-muted">Privacy Policy</Link>
-                </nav>
-              </div>
-            </details>
-          </div>
+      {/* Desktop Nav */}
+      <nav className="hidden md:flex items-center gap-6 text-sm justify-center flex-1">
+        <Link href="/" className="hover:opacity-90">Home</Link>
+        <Link href="/blog" className="hover:opacity-90">Blogs</Link>
+        <Link href="/contact" className="hover:opacity-90">Contact</Link>
+        <Link href="/about" className="hover:opacity-90">About</Link>
+        <Link href="/terms" className="hover:opacity-90">Terms & Conditions</Link>
+        <Link href="/privacy-policy" className="hover:opacity-90">Privacy Policy</Link>
+      </nav>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-4 text-sm">
-            <Link href="/" className="hover:opacity-90">Home</Link>
-            <Link href="/blog" className="hover:opacity-90">Blogs</Link>
-            <Link href="/contact" className="hover:opacity-90">Contact</Link>
-            <Link href="/about" className="hover:opacity-90">About</Link>
-            <Link href="/terms" className="hover:opacity-90">Terms & Conditions</Link>
-            <Link href="/privacy-policy" className="hover:opacity-90">Privacy Policy</Link>
-          </nav>
-
-          <div className="w-full max-w-full md:max-w-none md:flex-1 min-w-0 flex justify-end">
-            <div
-              ref={containerRef}
-              className="relative w-full max-w-[28rem] min-w-0"
-            >
-              <div
-                role="combobox"
-                aria-expanded={open}
-                aria-owns={listboxId}
-                aria-haspopup="listbox"
-                aria-controls={listboxId}
-                className="relative"
-              >
-                <Search
-                  className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground"
-                  aria-hidden="true"
-                />
-                <input
-                  type="search"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  onFocus={() => query && setOpen(true)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Search calculators..."
-                  aria-label="Search calculators"
-                  aria-autocomplete="list"
-                  aria-controls={listboxId}
-                  className="w-full h-10 rounded-md border border-input bg-card text-sm text-foreground placeholder:text-muted-foreground pl-10 pr-10 outline-none focus-visible:ring-2 focus-visible:ring-ring transition"
-                />
-                {query.length > 0 && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setQuery("");
-                      setOpen(false);
-                      setActiveIndex(-1);
-                    }}
-                    aria-label="Clear search"
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 inline-flex h-7 w-7 items-center justify-center rounded-md hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  >
-                    <SearchX className="h-4 w-4 text-muted-foreground" />
-                  </button>
-                )}
-              </div>
-
-              {open && (
-                <div
-                  id={listboxId}
-                  role="listbox"
-                  aria-label="Search suggestions"
-                  className="absolute left-0 right-0 top-full mt-2 rounded-md border border-border bg-popover shadow-sm overflow-hidden"
-                >
-                  {suggestions.length > 0 ? (
-                    <ul className="max-h-80 overflow-y-auto py-1">
-                      {suggestions.map((item, idx) => {
-                        const isActive = idx === activeIndex;
-                        return (
-                          <li key={item.id} role="option" aria-selected={isActive}>
-                            <button
-                              type="button"
-                              onMouseEnter={() => setActiveIndex(idx)}
-                              onMouseLeave={() => setActiveIndex(-1)}
-                              onClick={() => selectItem(item)}
-                              className={[
-                                "w-full text-left px-3 py-2 flex items-center justify-between gap-3",
-                                "transition",
-                                isActive
-                                  ? "bg-muted"
-                                  : "hover:bg-muted focus:bg-muted",
-                              ].join(" ")}
-                            >
-                              <span className="min-w-0 flex-1 truncate text-sm text-foreground">
-                                {item.name}
-                              </span>
-                              <span className="shrink-0 inline-flex items-center rounded-full bg-accent text-accent-foreground px-2 py-0.5 text-[11px] font-medium">
-                                {item.category}
-                              </span>
-                            </button>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  ) : (
-                    <div className="p-3 flex items-center gap-2 text-sm text-muted-foreground">
-                      <SearchX className="h-4 w-4" aria-hidden="true" />
-                      <span className="min-w-0 break-words">
-                        No results for “{query}”
-                      </span>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+      {/* Row 2 (on mobile) OR Right side (desktop) - Searchbar */}
+      <div className="w-full md:w-auto md:flex-1">
+        <div
+  ref={containerRef}
+  className="relative w-full min-w-0 md:max-w-[28rem]"
+>
+          <div className="relative">
+            <Search
+              className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground"
+              aria-hidden="true"
+            />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onFocus={() => query && setOpen(true)}
+              onKeyDown={handleKeyDown}
+              placeholder="Search calculators..."
+              className="w-full h-10 rounded-md border border-input bg-card text-sm text-foreground placeholder:text-muted-foreground pl-10 pr-10 outline-none focus-visible:ring-2 focus-visible:ring-ring transition"
+            />
           </div>
         </div>
       </div>
-    </header>
+    </div>
+
+    {/* Mobile Dropdown Menu */}
+    {openMenu && (
+      <div className="md:hidden mt-2 mb-2 rounded-md border border-border bg-popover shadow-sm p-2">
+        <nav className="flex flex-col text-sm">
+          <Link href="/" className="px-2 py-1.5 rounded hover:bg-muted">Home</Link>
+          <Link href="/blog" className="px-2 py-1.5 rounded hover:bg-muted">Blogs</Link>
+          <Link href="/contact" className="px-2 py-1.5 rounded hover:bg-muted">Contact</Link>
+          <Link href="/about" className="px-2 py-1.5 rounded hover:bg-muted">About</Link>
+          <Link href="/terms" className="px-2 py-1.5 rounded hover:bg-muted">Terms & Conditions</Link>
+          <Link href="/privacy-policy" className="px-2 py-1.5 rounded hover:bg-muted">Privacy Policy</Link>
+        </nav>
+      </div>
+    )}
+  </div>
+</header>
+
   );
 }

@@ -325,7 +325,7 @@ export default function EntertainmentCalculators({
             Dice Roller
           </TabsTrigger>
           <TabsTrigger value="love" aria-label="Love Calculator">
-            <MessageSquareHeart className="mr-2 h-4 w-4" aria-hidden="true" />
+            <MessageSquareHeart className=" h-4 w-4" aria-hidden="true" />
             Love Calculator
           </TabsTrigger>
         </TabsList>

@@ -691,42 +691,42 @@ export default function MeasurementCalculators({
         </CardDescription>
       </CardHeader>
       <CardContent className="w-full">
-        <div className="mb-4 flex items-center justify-between gap-2">
+        <div className="mb-4 items-center justify-between gap-2">
           <Tabs defaultValue={initialTab} className="w-full">
-            <TabsList className="flex w-full flex-wrap gap-1 bg-secondary">
-              <TabsTrigger value="height" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+            <TabsList className="flex w-full overflow-x-auto gap-1 bg-secondary ">
+              <TabsTrigger value="height" className="data-[state=active]:bg-white data-[state=active]:text-primary-black">
                 <PencilRuler className="mr-2 h-4 w-4" aria-hidden="true" /> Height
               </TabsTrigger>
-              <TabsTrigger value="conversion" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <TabsTrigger value="conversion" className="data-[state=active]:bg-white data-[state=active]:text-primary-black">
                 <Ruler className="mr-2 h-4 w-4" aria-hidden="true" /> Conversion
               </TabsTrigger>
-              <TabsTrigger value="gdp" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <TabsTrigger value="gdp" className="data-[state=active]:bg-white data-[state=active]:text-primary-black">
                 <SquareSigma className="mr-2 h-4 w-4" aria-hidden="true" /> GDP
               </TabsTrigger>
-              <TabsTrigger value="density" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <TabsTrigger value="density" className="data-[state=active]:bg-white data-[state=active]:text-primary-black">
                 <RulerDimensionLine className="mr-2 h-4 w-4" aria-hidden="true" /> Density
               </TabsTrigger>
-              <TabsTrigger value="mass" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <TabsTrigger value="mass" className="data-[state=active]:bg-white data-[state=active]:text-primary-black">
                 <Weight className="mr-2 h-4 w-4" aria-hidden="true" /> Mass
               </TabsTrigger>
-              <TabsTrigger value="weight" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <TabsTrigger value="weight" className="data-[state=active]:bg-white data-[state=active]:text-primary-black">
                 <Weight className="mr-2 h-4 w-4" aria-hidden="true" /> Weight
               </TabsTrigger>
-              <TabsTrigger value="speed" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <TabsTrigger value="speed" className="data-[state=active]:bg-white data-[state=active]:text-primary-black">
                 <Ruler className="mr-2 h-4 w-4" aria-hidden="true" /> Speed
               </TabsTrigger>
-              <TabsTrigger value="molarity" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <TabsTrigger value="molarity" className="data-[state=active]:bg-white data-[state=active]:text-primary-black">
                 <TestTube className="mr-2 h-4 w-4" aria-hidden="true" /> Molarity
               </TabsTrigger>
-              <TabsTrigger value="molecularWeight" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <TabsTrigger value="molecularWeight" className="data-[state=active]:bg-white data-[state=active]:text-primary-black">
                 <Radical className="mr-2 h-4 w-4" aria-hidden="true" /> Molecular Wt.
               </TabsTrigger>
-              <TabsTrigger value="roman" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <TabsTrigger value="roman" className="data-[state=active]:bg-white data-[state=active]:text-primary-black">
                 <SquarePi className="mr-2 h-4 w-4" aria-hidden="true" /> Roman
               </TabsTrigger>
             </TabsList>
 
-            <div className="mt-4" key={tempKey}>
+            <div className="mt-4 mb-4" key={tempKey}>
               {/* Height Calculator */}
               <TabsContent value="height" className="mt-0">
                 <section aria-labelledby="height-title" className="space-y-4">
